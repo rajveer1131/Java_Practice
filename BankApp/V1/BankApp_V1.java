@@ -43,7 +43,7 @@ class UserData {
 
 }
 
-public class BankApp {
+public class BankApp_V1 {
 
     static Scanner sc = new Scanner(System.in);
     static UserData userData = new UserData();
