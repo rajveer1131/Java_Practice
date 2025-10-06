@@ -1,0 +1,7 @@
+Apple , 1234567890 , 300.0
+banana , 0987654321 , 2345.0
+Mango fruit , 35523883 , 22.0
+Strabeery queen , 38373726 , 2233.0
+licche , 9292792972 , 9282672.0
+jvvhthffh , 9787 , 76.0
+jjdj , 33 , 22.0
