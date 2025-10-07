@@ -44,73 +44,70 @@ class UserData {
 
 }
 
-public class BankApp_V2{
+public class BankApp_V2 {
 
     static Scanner sc = new Scanner(System.in);
     static UserData userData = new UserData();
-    
 
-    static void withdraw(){
+    static void withdraw() {
         System.out.println("Enter the Amount you wish to withdraw.");
 
-                while (true) {
-                    double withdraw = sc.nextDouble();
-                    if (withdraw <= userData.getBalance()) {
-                        userData.setBalance( userData.getBalance() - withdraw);
-                        System.out.println("You have withdrawn amount: " + withdraw
-                                + "\nYour current Bank Account balance is: " + userData.getBalance());
-                        break;
-                    } else {
-                        System.out.println(
-                                "Entered Amount is more than the Account Balance. Please enter an amount less than or equal to: "
-                                        + userData.getBalance());
+        while (true) {
+            double withdraw = sc.nextDouble();
+            if (withdraw <= userData.getBalance()) {
+                userData.setBalance(userData.getBalance() - withdraw);
+                System.out.println("You have withdrawn amount: " + withdraw
+                        + "\nYour current Bank Account balance is: " + userData.getBalance());
+                break;
+            } else {
+                System.out.println(
+                        "Entered Amount is more than the Account Balance. Please enter an amount less than or equal to: "
+                                + userData.getBalance());
 
-                    }
-                }
-
+            }
+        }
 
     }
 
-    static void deposit(){
+    static void deposit() {
         System.out.println("Enter the Amount you wish to Deposit to Your Account.");
-        userData.setBalance(userData.getBalance()+sc.nextDouble()); // For Deposit
+        userData.setBalance(userData.getBalance() + sc.nextDouble()); // For Deposit
         System.out.println("\nYour new current Bank Account balance is: " + userData.getBalance());
-        
+
     }
 
     static void oldUser() {
         System.out.println("Welcome back, " + userData.getUserName() + "!");
 
-
         boolean exit = false;
 
-        while(!exit){
-System.out.println("Which Action do you wish to perform\n\n"
-                + "Check Balance  -->  Press 1\n"
-                + "Withdraw Money -->  Press 2\n"
-                + "Deposit Money  -->  Press 3\n\n"
-                + "Press 4 to Exit.");
-            
+        while (!exit) {
+            System.out.println("Which Action do you wish to perform\n\n"
+                    + "Check Balance  -->  Press 1\n"
+                    + "Withdraw Money -->  Press 2\n"
+                    + "Deposit Money  -->  Press 3\n\n"
+                    + "Press 4 to Exit.");
+
             int userAction = sc.nextInt();
 
-        switch (userAction) {
-            case 1:
-                System.out.println("\nBank Balance: " + userData.getBalance());
+            switch (userAction) {
+                case 1:
+                    System.out.println("\nBank Balance: " + userData.getBalance());
 
-                break;
+                    break;
                 case 2:
-                withdraw();
-                break;
-            case 3:
-                deposit();
-                break;
-            case 4:
-                System.out.println("\nThanks for your visit.\n");
-                exit=true;
-                break;
+                    withdraw();
+                    break;
+                case 3:
+                    deposit();
+                    break;
+                case 4:
+                    System.out.println("\nThanks for your visit.\n");
+                    exit = true;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
@@ -129,24 +126,35 @@ System.out.println("Which Action do you wish to perform\n\n"
             userData.setPhoneNumber(sc.nextLine());
             System.out.println("Enter The Amount you wish to add to your account:");
             userData.setBalance(sc.nextDouble());
-            System.out.println("\nAccount Created Successfully! \nYour Details:\n" + "Name: " + userData.getUserName()
-                    + "\nPhone number: " + userData.getPhoneNumber() + "\nBalance: " + userData.getBalance());
-                
 
-            try( FileWriter fw = new FileWriter("UserData.txt",true);){
-
-                fw.write(userData.getUserName()+" , "+userData.getPhoneNumber()+" , "+userData.getBalance()+"\n");
-                File newFile = new File("UserData.txt");
+            try (FileWriter fw = new FileWriter("UserData.txt", true)) {
                 Scanner userCheck = new Scanner(newFile);
-                while(userCheck.hasNextLine()){
+                while (userCheck.hasNextLine()) {
+                    if(userCheck.nextLine().contains(userData.getPhoneNumber())){
+                        System.out.println("This user Already exists. Please Login as Old user");
+                        userData.
+                        break;
+                    }
+                }
+
+                fw.write(userData.getUserName() + " , " + userData.getPhoneNumber() + " , " + userData.getBalance()
+                        + "\n");
+                System.out.println("\nAccount Created Successfully! \nYour Details:\n" + "Name: "
+                        + userData.getUserName()
+                        + "\nPhone number: " + userData.getPhoneNumber() + "\nBalance: " + userData.getBalance());
+
+                File newFile = new File("UserData.txt");
+
+                System.out.println("All Users in System");
+                while (userCheck.hasNextLine()) {
                     System.out.println(userCheck.nextLine());
                 }
-            }catch (IOException e) {
-               System.out.println("An Error Occuered");
-               e.getStackTrace();
+            } catch (IOException e) {
+                System.out.println("An Error Occuered");
+                e.getStackTrace();
             }
 
-        }else{
+        } else {
 
             System.out.println("Thanks for your visit.");
         }
