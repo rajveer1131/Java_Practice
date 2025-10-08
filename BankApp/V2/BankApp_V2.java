@@ -133,7 +133,7 @@ public class BankApp_V2 {
                     if(userCheck.nextLine().contains(userData.getPhoneNumber())){
                         System.out.println("This user Already exists. Please Login as Old user");
                         userData.
-                        break;
+                        break
                     }
                 }
 
