@@ -2,21 +2,27 @@ import java.util.*;
 import java.io.*;
 
 class UserData {
+    private String accountNumber;
     private String name;
     private String phoneNumber;
     private double balance;
 
     UserData() {
+        this.accountNumber = "0000000000"
         this.name = "Adam";
         this.phoneNumber = "0000000000";
         this.balance = 1000.00;
     }
 
-    UserData(String name, String phoneNumber, double balance) {
+    UserData(String name,String accountNumber, String phoneNumber, double balance) {
+        this.accountNumber = accountNumber;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.balance = balance;
     }
+
+
+// --------------------- Setters
 
     public void setUserName(String name) {
         this.name = name;
@@ -28,6 +34,13 @@ class UserData {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+// --------------------- Getters
+
+
+    public String getAccountNumber(){
+        return accountNumber;
     }
 
     public String getUserName() {
@@ -48,6 +61,29 @@ public class BankApp_V2 {
 
     static Scanner sc = new Scanner(System.in);
     static UserData userData = new UserData();
+
+    static String generateAccount(){
+        Random rand = new Random();
+        String tempAccount = "";
+        while(true){
+            
+            tempAccount = (String) rand.nextInt(9999999999) + 1000000000;
+            if(isAccountNumberUnique(tempAccount)){
+                break;
+            }
+        }
+        return tempAccount;
+        
+    }
+
+   static boolean isAccountNumberUnique(String tempAccount){
+        Scanner sc = new Scanner(new File("UserData.txt"));
+        while(sc.hasNextLine()){
+            if(sc.nextLine().contains(tempAccount))
+            return false;
+        }
+        return true;
+   }
 
     static void withdraw() {
         System.out.println("Enter the Amount you wish to withdraw.");
@@ -110,7 +146,6 @@ public class BankApp_V2 {
                     break;
             }
         }
-
     }
 
     static void newUser() {
@@ -128,6 +163,7 @@ public class BankApp_V2 {
             userData.setBalance(sc.nextDouble());
 
             try (FileWriter fw = new FileWriter("UserData.txt", true)) {
+                File newFile = new File("UserData.txt");
                 Scanner userCheck = new Scanner(newFile);
                 while (userCheck.hasNextLine()) {
                     if(userCheck.nextLine().contains(userData.getPhoneNumber())){
@@ -137,13 +173,14 @@ public class BankApp_V2 {
                     }
                 }
 
-                fw.write(userData.getUserName() + " , " + userData.getPhoneNumber() + " , " + userData.getBalance()
+                
+
+                fw.write(userData.setAccountNumber(generateAccount())+" , " +userData.getUserName() + " , " + userData.getPhoneNumber() + " , " + userData.getBalance()
                         + "\n");
-                System.out.println("\nAccount Created Successfully! \nYour Details:\n" + "Name: "
+                System.out.println("\nAccount Created Successfully! \nYour Details:\n" +"Account No.: "+userData.getAccountNumber()+ "Name: "
                         + userData.getUserName()
                         + "\nPhone number: " + userData.getPhoneNumber() + "\nBalance: " + userData.getBalance());
 
-                File newFile = new File("UserData.txt");
 
                 System.out.println("All Users in System");
                 while (userCheck.hasNextLine()) {
